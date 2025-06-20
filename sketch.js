@@ -2,24 +2,18 @@ let trazos = [];
 let trazoActual = null;
 
 const paleta = [
-  [222, 218, 145], // Amarillo suave
-  [191, 186, 176], // Gris cálido
-  [166, 136, 99],  // Ocre
-  [198, 153, 144], // Rosado viejo
-  [144, 178, 126], // Verde apagado
-  [238, 227, 202]  // Fondo cálido claro
+  [222, 218, 145],
+  [191, 186, 176],
+  [166, 136, 99],
+  [198, 153, 144],
+  [144, 178, 126],
+  [238, 227, 202]
 ];
-
-let fuente;
-
-function preload() {
-  fuente = loadFont('https://fonts.gstatic.com/s/cormorantgaramond/v22/co3bmX5slCNuHLi8bLeY4kTLjr5dKc4qWw.woff2');
-}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(...paleta[5]);
-  textFont(fuente);
+  textFont('Cormorant Garamond');
   textSize(70);
   textAlign(CENTER, TOP);
   smooth();
@@ -28,12 +22,10 @@ function setup() {
 function draw() {
   background(...paleta[5]);
 
-  // Título exacto: "Dibuja un recuerdo"
   fill(30, 30, 30, 140);
   noStroke();
   text("Dibuja un recuerdo", width / 2, height * 0.035);
 
-  // Mostrar trazos
   for (let t of trazos) {
     t.mostrar();
   }
@@ -42,7 +34,6 @@ function draw() {
     trazoActual.mostrar();
   }
 
-  // Cursor personalizado
   noCursor();
   fill(30, 30, 30, 60);
   ellipse(mouseX, mouseY, 20, 20);
