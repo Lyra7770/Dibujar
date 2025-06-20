@@ -24,7 +24,7 @@ function draw() {
   
   noStroke();
   fill(30, 30, 30, 150);
-  text("dibuja un recuerdo.", width/2, height * 0.03);
+  text("Dibuja un recuerdo", width/2, height * 0.03);
   
   for (let t of trazos) {
     t.mostrar();
