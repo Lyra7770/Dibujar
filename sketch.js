@@ -10,21 +10,32 @@ const paleta = [
   [238, 227, 202]
 ];
 
+let textoGrafico;
+let esMovil;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  pixelDensity(displayDensity()); // mejora en alta resolución
   background(...paleta[5]);
   textFont('Cormorant Garamond');
-  textSize(70);
+  textSize(windowWidth < 600 ? 40 : 70);
   textAlign(CENTER, TOP);
   smooth();
+  esMovil = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  frameRate(esMovil ? 30 : 60);
+
+  textoGrafico = createGraphics(width, height);
+  textoGrafico.textFont('Cormorant Garamond');
+  textoGrafico.textSize(windowWidth < 600 ? 40 : 70);
+  textoGrafico.textAlign(CENTER, TOP);
+  textoGrafico.fill(30, 30, 30, 140);
+  textoGrafico.noStroke();
+  textoGrafico.text("Dibuja un recuerdo", width / 2, height * 0.035);
 }
 
 function draw() {
   background(...paleta[5]);
-
-  fill(30, 30, 30, 140);
-  noStroke();
-  text("Dibuja un recuerdo", width / 2, height * 0.035);
+  image(textoGrafico, 0, 0);
 
   for (let t of trazos) {
     t.mostrar();
@@ -36,7 +47,7 @@ function draw() {
 
   noCursor();
   fill(30, 30, 30, 60);
-  ellipse(mouseX, mouseY, 20, 20);
+  ellipse(mouseX, mouseY, esMovil ? 14 : 20, esMovil ? 14 : 20);
 }
 
 function mousePressed() {
@@ -72,7 +83,8 @@ class Trazo {
   }
 
   agregarPincelada(x, y) {
-    for (let i = 0; i < 5; i++) {
+    let cantidad = esMovil ? 2 : 5;
+    for (let i = 0; i < cantidad; i++) {
       let ox = random(-8, 8);
       let oy = random(-8, 8);
       this.puntos.push(createVector(x + ox, y + oy));
@@ -91,4 +103,12 @@ class Trazo {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  textoGrafico.resizeCanvas(width, height);
+  textoGrafico.clear();
+  textoGrafico.textFont('Cormorant Garamond');
+  textoGrafico.textSize(windowWidth < 600 ? 40 : 70);
+  textoGrafico.textAlign(CENTER, TOP);
+  textoGrafico.fill(30, 30, 30, 140);
+  textoGrafico.noStroke();
+  textoGrafico.text("Dibuja un recuerdo", width / 2, height * 0.035);
 }
